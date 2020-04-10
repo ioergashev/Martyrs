@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 235ed52c2f52b7641b3b1162d47f7e07, type: 3}
+  m_Name: ServerSettings
+  m_EditorClassIdentifier: 
+  testServerUrl: http://95.165.144.255:8344/NMBook/api/nm/
+  productionServerUrl: http://95.165.144.255:8344/NMBook/api/
+  useTestServer: 1
+  requestTimeout: 30
+  authToken: '&token=nm19nav'
+  logResponseHeaders: 0
+  logResponseBody: 1
+  testFileServerUrl: http://95.165.144.255:8344
+  productionFileServerUrl: http://95.165.144.255:8344
+  useTestFileServer: 1
+  authTokenFile: ?token=nm19nav
