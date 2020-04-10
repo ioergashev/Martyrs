@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17485fcbe3fdb9d4d8d3edbcd6267d72, type: 3}
   m_Name: SearchSettings
   m_EditorClassIdentifier: 
-  itemsPerPage: 50
+  itemsPerPage: 20
   searchListItemPrefab: {fileID: 7509117958832085004, guid: 06ee7bff821d0b74db4877d1667f4ca0,
     type: 3}
