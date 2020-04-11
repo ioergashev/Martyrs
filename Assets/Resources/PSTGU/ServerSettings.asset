@@ -17,7 +17,7 @@ MonoBehaviour:
   useTestServer: 1
   requestTimeout: 30
   authToken: '&token=nm19nav'
-  logResponseHeaders: 0
+  logResponseHeaders: 1
   logResponseBody: 1
   testFileServerUrl: http://95.165.144.255:8344
   productionFileServerUrl: http://95.165.144.255:8344

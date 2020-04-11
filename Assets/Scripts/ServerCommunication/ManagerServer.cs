@@ -19,10 +19,30 @@ namespace PSTGU.ServerCommunication
 
             var response = ParseResponse<SearchResponse>(request);
 
+            // Сохранить количество найденных записей
+            response.RecordsFoundCount = GetRecordsCount(request.UnityWebRequest);
+
             // Сохранить данные
             CashData(response);
 
             yield return response;
+        }
+
+        private static int GetRecordsCount(UnityWebRequest request)
+        {
+            int recordsCount = -1;
+
+            try
+            {
+                recordsCount = int.Parse(request.GetResponseHeader("X-Total-Count"));
+            }
+            catch (Exception e)
+            {
+                recordsCount = -1;
+                Debug.LogException(e);
+            }
+
+            return recordsCount;
         }
 
         private static void CashData(SearchResponse response)
@@ -106,6 +126,7 @@ namespace PSTGU.ServerCommunication
         /// <param name="request"> Тип запроса </param>
         private static T ParseResponse<T>(RequestBase request) where T : SimpleResponse, new()
         {
+            // Обработка ошибок
             if (request == null || request.UnityWebRequest == null)
             {
                 Debug.LogError("Can not parse response of type " + typeof(T).ToString().Split('.').Last() + ". Invalid request.");
@@ -113,6 +134,7 @@ namespace PSTGU.ServerCommunication
                 return null;
             }
 
+            // Логгирование
             if (ServerSettings.LogResponseHeaders)
             {
                 string headers = "";
@@ -122,8 +144,9 @@ namespace PSTGU.ServerCommunication
                 }
                 Debug.Log("-----RESPONSE HEADERS " + request.GetType().ToString().Split('.').Last() + "\n" + headers);
             }
-            
-            if(request.UnityWebRequest.downloadHandler == null)
+
+            // Обработка ошибок
+            if (request.UnityWebRequest.downloadHandler == null)
             {
                 Debug.LogError("Can not parse response of type " + typeof(T).ToString().Split('.').Last() + ". Invalid request.");
 
@@ -132,6 +155,7 @@ namespace PSTGU.ServerCommunication
 
             string json = request.UnityWebRequest.downloadHandler.text;
 
+            // Обработка ошибок
             if (string.IsNullOrEmpty(json))
             {
                 Debug.LogErrorFormat("{6} Response is null! error: {0}, code: {1}, isHttpError: {2}, isNetworkError: {3}, bytes: {4}, isDone: {5}",
@@ -153,6 +177,7 @@ namespace PSTGU.ServerCommunication
                 json = "{\"data\":" + json + "}";
             }
 
+            // Логгирование на диск
             if (ServerSettings.LogResponseBody)
             {
                 string responseName = typeof(T).ToString().Split('.').Last();                
@@ -161,7 +186,7 @@ namespace PSTGU.ServerCommunication
                 Debug.Log(responseName + "   Response:\n" + consoleLog);
 
                 string pathFolder = Application.persistentDataPath + "/jsons";
-                string pathFile = pathFolder+ "/" + responseName;
+                string pathFile = pathFolder+ "/" + System.DateTime.Now.ToFileTime() + "_" + responseName;
 
                 if (!System.IO.Directory.Exists(pathFolder))
                 {
@@ -204,7 +229,7 @@ namespace PSTGU.ServerCommunication
                 }
             }
 
-            // Если ошибка 400
+            // Если ошибка 400 или 200
             if (request.UnityWebRequest.responseCode == 400)
             {
                 // Попытаться извлечь объект-ответ из json 

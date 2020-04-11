@@ -9,5 +9,7 @@ namespace PSTGU.ServerCommunication
     public class SearchResponse: SimpleResponse
     {
         public PersonContent[] data;
+
+        public int RecordsFoundCount = -1;
     }
 }
