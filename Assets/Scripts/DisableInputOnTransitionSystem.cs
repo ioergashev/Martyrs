@@ -8,9 +8,18 @@ namespace PSTGU
 {
     public class DisableInputOnTransitionSystem : MonoBehaviour
     {
+        private UI _UI;
+        private WindowsSettingsRuntime windowsSettingsRuntime;
+
+        private void Awake()
+        {
+            _UI = FindObjectOfType<UI>();
+            windowsSettingsRuntime = FindObjectOfType<WindowsSettingsRuntime>();
+        }
+
         private void Update()
         {
-            UI.GraphicRaycaster.enabled = WindowsSettings.TransitionCoroutine == null;
+            _UI.GraphicRaycaster.enabled = windowsSettingsRuntime.TransitionCoroutine == null;
         }
     }
 }

@@ -4,27 +4,36 @@ namespace PSTGU
 {
     public class SearchPagesNavigationSystem : MonoBehaviour
     {
+        private SearchWindow searchWindow;
+        private SearchSettingsRuntime searchSettingsRuntime;
+
+        private void Awake()
+        {
+            searchWindow = FindObjectOfType<SearchWindow>();
+            searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
+        }
+
         private void Start()
         {
             SetButtomUIActive(false);
 
-            SearchSettings.OnSearchComplite.AddListener(SearchCompliteAction);
-            SearchSettings.OnSearchError.AddListener(SearchErrorAction);
+            searchSettingsRuntime.OnSearchComplite.AddListener(SearchCompliteAction);
+            searchSettingsRuntime.OnSearchError.AddListener(SearchErrorAction);
         }
 
         private void SetButtomUIActive(bool value)
         {
-            SearchWindow.View.PagesNavigationContainer.SetActive(value);
-            SearchWindow.View.RecordsFoundCountTxt.gameObject.SetActive(value);
+            searchWindow.View.PagesNavigationContainer.SetActive(value);
+            searchWindow.View.RecordsFoundCountTxt.gameObject.SetActive(value);
         }
 
         private void SearchCompliteAction()
         {
             SetButtomUIActive(true);
 
-            SearchWindow.View.RecordsFoundCountTxt.text = "Найдено записей: " + SearchSettings.ItemsCount;
-            SearchWindow.View.CurrentPageTxt.text = (SearchSettings.CurrentPageIndex + 1).ToString();
-            SearchWindow.View.PagesCountTxt.text = SearchSettings.PagesCount.ToString();
+            searchWindow.View.RecordsFoundCountTxt.text = "Найдено записей: " + searchSettingsRuntime.ItemsCount;
+            searchWindow.View.CurrentPageTxt.text = (searchSettingsRuntime.CurrentPageIndex + 1).ToString();
+            searchWindow.View.PagesCountTxt.text = searchSettingsRuntime.PagesCount.ToString();
         }
 
         private void SearchErrorAction()

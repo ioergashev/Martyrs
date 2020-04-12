@@ -5,10 +5,11 @@ namespace PSTGU.ServerCommunication
     [Serializable]
     public class SimpleResponse
     {
-        public bool IsError { get { return !string.IsNullOrEmpty(error) || errorCode != 0; } }
         public string error;
-        public long errorCode;
+        public long errorCode = 0;
         public string success;
+
+        public bool IsError { get { return !string.IsNullOrEmpty(error) || errorCode != 0; } }
 
         public override string ToString()
         {

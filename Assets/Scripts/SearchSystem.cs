@@ -8,17 +8,30 @@ namespace PSTGU
 {
     public class SearchSystem : MonoBehaviour
     {
+        private SearchWindow searchWindow;
+        private SearchSettingsRuntime searchSettingsRuntime;
+        private DataRuntime dataRuntime;
+        private ManagerServer managerServer;
+
+        private void Awake()
+        {
+            searchWindow = FindObjectOfType<SearchWindow>();
+            searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
+            dataRuntime = FindObjectOfType<DataRuntime>();
+            managerServer = FindObjectOfType<ManagerServer>();
+        }
+
         private void Start()
         {
-            SearchWindow.View.SearchBtn.onClick.AddListener(SearchBtnClickAction);
-            SearchWindow.View.NextPageBtn.onClick.AddListener(NextPageBtnClickAction);
-            SearchWindow.View.PrevPageBtn.onClick.AddListener(PrevPageBtnClickAction);
+            searchWindow.View.SearchBtn.onClick.AddListener(SearchBtnClickAction);
+            searchWindow.View.NextPageBtn.onClick.AddListener(NextPageBtnClickAction);
+            searchWindow.View.PrevPageBtn.onClick.AddListener(PrevPageBtnClickAction);
         }
         
         private void SearchBtnClickAction()
         {
             // Если поисковой запрос уже выполняется
-            if (SearchSettings.SearchCoroutine != null)
+            if (searchSettingsRuntime.SearchCoroutine != null)
             {
                 return;
             }
@@ -27,72 +40,72 @@ namespace PSTGU
             ResetSearchSettings();
 
             // Начать поиск
-            SearchSettings.SearchCoroutine = StartCoroutine(SearchCoroutine(0));
+            searchSettingsRuntime.SearchCoroutine = StartCoroutine(SearchCoroutine(0));
 
             // Сообщить о начале поиска
-            SearchSettings.OnStartSearch?.Invoke();
+            searchSettingsRuntime.OnStartSearch?.Invoke();
         }
 
         private void NextPageBtnClickAction()
         {
             // Если поисковой запрос уже выполняется
-            if (SearchSettings.SearchCoroutine != null)
+            if (searchSettingsRuntime.SearchCoroutine != null)
             {
                 return;
             }
 
             // Если не более одной страницы или последняя страница
-            if (SearchSettings.PagesCount <= 1 || SearchSettings.IsLastPage)
+            if (searchSettingsRuntime.PagesCount <= 1 || searchSettingsRuntime.IsLastPage)
             {
                 return;
             }
 
             // Начать поиск для следующей страницы
-            SearchSettings.SearchCoroutine = StartCoroutine(SearchCoroutine(SearchSettings.LastItemIndex + 1));
+            searchSettingsRuntime.SearchCoroutine = StartCoroutine(SearchCoroutine(searchSettingsRuntime.LastItemIndex + 1));
 
             // Сообщить о начале поиска
-            SearchSettings.OnStartSearch?.Invoke();
+            searchSettingsRuntime.OnStartSearch?.Invoke();
         }
 
         private void PrevPageBtnClickAction()
         {
             // Если поисковой запрос уже выполняется
-            if (SearchSettings.SearchCoroutine != null)
+            if (searchSettingsRuntime.SearchCoroutine != null)
             {
                 return;
             }
 
             // Если не более одной страницы или первая страница
-            if (SearchSettings.PagesCount <= 1 || SearchSettings.CurrentPageIndex <= 0)
+            if (searchSettingsRuntime.PagesCount <= 1 || searchSettingsRuntime.CurrentPageIndex <= 0)
             {
                 return;
             }
 
             // Вычислить, сколько записей нужно пропустить
-            var skip = (SearchSettings.CurrentPageIndex - 1) * SearchSettings.ItemsPerPage;
+            var skip = (searchSettingsRuntime.CurrentPageIndex - 1) * searchSettingsRuntime.ItemsPerPage;
 
             // Начать поиск для предыдущей страницы
-            SearchSettings.SearchCoroutine = StartCoroutine(SearchCoroutine(skip));
+            searchSettingsRuntime.SearchCoroutine = StartCoroutine(SearchCoroutine(skip));
 
             // Сообщить о начале поиска
-            SearchSettings.OnStartSearch?.Invoke();
+            searchSettingsRuntime.OnStartSearch?.Invoke();
         }
 
         private void ResetSearchSettings()
         {
             // Начать отчет с начала
-            SearchSettings.LastItemIndex = -1;
-            SearchSettings.ItemsCount = 0;
+            searchSettingsRuntime.LastItemIndex = -1;
+            searchSettingsRuntime.ItemsCount = 0;
         }
 
         private IEnumerator SearchCoroutine(int skip)
         {
             // Сформировать данные для запроса
-            var query = SearchWindow.View.SearchInput.text;
-            var itemsPerPage = SearchSettings.ItemsPerPage;
+            var query = searchWindow.View.SearchInput.text;
+            var itemsPerPage = searchSettingsRuntime.ItemsPerPage;
 
             // Сформировать запрос
-            var requestOper = ManagerServer.Search(query, skip, itemsPerPage);
+            var requestOper = managerServer.Search(query, skip, itemsPerPage);
 
             // Выполнить запрос
             yield return requestOper;
@@ -108,23 +121,23 @@ namespace PSTGU
                 Debug.LogError(response == null);
 
                 // Сообщить об ошибке
-                callback = SearchSettings.OnSearchError;
+                callback = searchSettingsRuntime.OnSearchError;
                 // Сбросить данные поиска
                 ResetSearchSettings();
             }
             else
             {
                 // Сообщить об успешном завершении поиска
-                callback = SearchSettings.OnSearchComplite;
+                callback = searchSettingsRuntime.OnSearchComplite;
 
                 // Сохранить полученные данные
-                Data.SearchResponse = response.data.ToList();
-                SearchSettings.ItemsCount = response.RecordsFoundCount;
-                SearchSettings.LastItemIndex = Mathf.Min(skip + SearchSettings.ItemsPerPage, SearchSettings.ItemsCount) - 1;
+                dataRuntime.SearchResponse = response.data.ToList();
+                searchSettingsRuntime.ItemsCount = response.RecordsFoundCount;
+                searchSettingsRuntime.LastItemIndex = Mathf.Min(skip + searchSettingsRuntime.ItemsPerPage, searchSettingsRuntime.ItemsCount) - 1;
             }
 
             // Завершить поиск
-            SearchSettings.SearchCoroutine = null;
+            searchSettingsRuntime.SearchCoroutine = null;
 
             // Сообщить о завершении поиска
             callback?.Invoke();

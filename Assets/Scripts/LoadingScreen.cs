@@ -6,39 +6,8 @@ namespace PSTGU
 {
     public class LoadingScreen : MonoBehaviour
     {
-        private static LoadingScreen _instance;
+        public LoadingViewComponent View;
 
-        private static LoadingScreen instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = FindObjectOfType<LoadingScreen>();
-                }
-                return _instance;
-            }
-        }
-
-        private void Awake()
-        {
-            _instance = FindObjectOfType<LoadingScreen>();
-        }
-
-        [SerializeField]
-        private LoadingViewComponent view;
-
-        public static LoadingViewComponent View
-        {
-            get { return instance.view; }
-        }
-
-        [SerializeField]
-        private EnableWindowComponent enableComponent;
-
-        public static EnableWindowComponent EnableComponent
-        {
-            get { return instance.enableComponent; }
-        }
+        public EnableWindowComponent EnableComponent;
     }
 }

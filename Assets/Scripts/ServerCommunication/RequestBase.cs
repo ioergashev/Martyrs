@@ -6,17 +6,17 @@ namespace PSTGU.ServerCommunication
     public abstract class RequestBase
     {
         public string URL;
-        protected UnityWebRequest _unityWebRequest;
+        protected UnityWebRequest unityWebRequest;
 
         public UnityWebRequest UnityWebRequest
         {
             get
             {
-                if (_unityWebRequest == null) 
+                if (unityWebRequest == null) 
                 {
                     InitRequest();
                 }
-                return _unityWebRequest;
+                return unityWebRequest;
             }
         }
 
@@ -32,9 +32,9 @@ namespace PSTGU.ServerCommunication
 
         public void Abort()
         {
-            if (_unityWebRequest != null)
+            if (unityWebRequest != null)
             {
-                _unityWebRequest.Abort();
+                unityWebRequest.Abort();
             }
         }
 

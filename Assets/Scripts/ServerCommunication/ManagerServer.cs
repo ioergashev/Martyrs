@@ -9,26 +9,27 @@ using UnityEngine.Networking;
 namespace PSTGU.ServerCommunication
 {
     /// <summary> Фасад для взаимодействия с сервером </summary>
-    public static class ManagerServer
+    public class ManagerServer : MonoBehaviour
     {
-        public static IEnumerator Search(string query, int skip = 0, int take = 100)
+        /// <summary> Успешный запрос возвращает объект типа <see cref="SearchResponse"/></summary>
+        public IEnumerator Search(string query, int skip = 0, int take = 100)
         {
-            var request = new SimpleSearchRequest(ServerSettings.ServerURL, query, skip, take);
+            // Сформировать запрос
+            var request = new SimpleSearchRequest(ServerSettings.Instance.ServerURL, query, skip, take);
 
+            // Выполнить запрос
             yield return SendRequestWithTimer(request);
 
+            // Получить ответ
             var response = ParseResponse<SearchResponse>(request);
 
             // Сохранить количество найденных записей
             response.RecordsFoundCount = GetRecordsCount(request.UnityWebRequest);
 
-            // Сохранить данные
-            CashData(response);
-
             yield return response;
         }
 
-        private static int GetRecordsCount(UnityWebRequest request)
+        private int GetRecordsCount(UnityWebRequest request)
         {
             int recordsCount = -1;
 
@@ -45,86 +46,40 @@ namespace PSTGU.ServerCommunication
             return recordsCount;
         }
 
-        private static void CashData(SearchResponse response)
+        /// <summary> Успешный запрос возвращает объект типа <see cref="Texture2D"/></summary>
+        public IEnumerator DownloadPhoto(string url)
         {
-            if (response == null || response.data == null)
-            {
-                return;
-            }
-
-            foreach (var item in response.data)
-            {
-                // Если элемент пустой, отсутсвует id или элемент уже имеется в базе
-                if (item.data == null || string.IsNullOrEmpty(item.docId) || Data.Persons.ContainsKey(item.docId))
-                {
-                    continue;
-                }
-                else
-                {
-                    // Сохранить элемент
-                    Data.Persons.Add(item.docId, item);
-                }
-            }
-        }
-
-        public static IEnumerator DownloadPhoto(string url)
-        {
-            if(string.IsNullOrEmpty(url))
+            // Обработка ошибок
+            if (string.IsNullOrEmpty(url))
             {
                 yield break;
             }
 
             // Сформировать url запроса
-            url = ServerSettings.FileServerURL + url + ServerSettings.AuthTokenFile;
+            url = ServerSettings.Instance.FileServerURL + url + ServerSettings.Instance.AuthTokenFile;
 
             // Сформировать запрос
             var webRequest = UnityWebRequestTexture.GetTexture(url);
 
+            // Выполнить запрос
             yield return webRequest.SendWebRequest();
 
+            // Обработка ошибок
             if (webRequest.isNetworkError || webRequest.isHttpError)
             {
                 Debug.LogError(webRequest.error);
                 yield break;
             }
 
+            // Извлечь изображение
             var texture = ((DownloadHandlerTexture)webRequest.downloadHandler).texture;
-
-            // Сохранить данные
-            //CashData(texture, url);
 
             yield return texture;
         }
 
-        /// <summary> Кеширование изображения в памяти компьютера с созданием уникального имени на основании url </summary>
-        private static void CashData(Texture2D texture, string url)
-        {
-            if (texture == null || string.IsNullOrEmpty(url))
-            {
-                return;
-            }
-
-            string path = ManagerIO.CreateFilePathByPhotoURL(url);
-
-            if (string.IsNullOrEmpty(path))
-            {
-                return;
-            }
-
-            // Если файл уже имеется в кеше
-            if (System.IO.File.Exists(path))
-            {
-                return;
-            }
-
-            // Сохранить изображение
-            System.IO.File.WriteAllBytes(path, texture.EncodeToJPG());
-        }
-
-        /// <summary> Обработать ответ с сервера </summary>
+        /// <summary> Обработать ответ с сервера. Возвращает объект-ответ </summary>
         /// <typeparam name="T"> Тип ответа </typeparam>
-        /// <param name="request"> Тип запроса </param>
-        private static T ParseResponse<T>(RequestBase request) where T : SimpleResponse, new()
+        private T ParseResponse<T>(RequestBase request) where T : SimpleResponse, new()
         {
             // Обработка ошибок
             if (request == null || request.UnityWebRequest == null)
@@ -135,7 +90,7 @@ namespace PSTGU.ServerCommunication
             }
 
             // Логгирование
-            if (ServerSettings.LogResponseHeaders)
+            if (ServerSettings.Instance.LogResponseHeaders)
             {
                 string headers = "";
                 foreach (var t in request.UnityWebRequest.GetResponseHeaders())
@@ -178,7 +133,7 @@ namespace PSTGU.ServerCommunication
             }
 
             // Логгирование на диск
-            if (ServerSettings.LogResponseBody)
+            if (ServerSettings.Instance.LogResponseBody)
             {
                 string responseName = typeof(T).ToString().Split('.').Last();                
                 string consoleLog = json.Replace(",", ",\n");
@@ -229,7 +184,7 @@ namespace PSTGU.ServerCommunication
                 }
             }
 
-            // Если ошибка 400 или 200
+            // Если ошибка 400
             if (request.UnityWebRequest.responseCode == 400)
             {
                 // Попытаться извлечь объект-ответ из json 
@@ -257,10 +212,10 @@ namespace PSTGU.ServerCommunication
         }
 
         /// <summary> Отправить запрос и дожидаться ответа в течение определенного времени </summary>
-        private static IEnumerator SendRequestWithTimer(RequestBase request)
+        private IEnumerator SendRequestWithTimer(RequestBase request)
         {
             // Добавить токен аутентификации в запрос
-            request.URL += ServerSettings.AuthToken;
+            request.URL += ServerSettings.Instance.AuthToken;
 
             Debug.Log("Send Request:\n" + request.URL);
 
@@ -268,7 +223,7 @@ namespace PSTGU.ServerCommunication
             var asyncOperation = request.Send();
 
             // Начать отсчет времени ожидания ответа
-            float timer = ServerSettings.RequestTimeout;
+            float timer = ServerSettings.Instance.RequestTimeout;
 
             // Пока запрос не выполнен
             while (!asyncOperation.isDone)

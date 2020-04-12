@@ -8,28 +8,37 @@ namespace PSTGU
 {
     public class ShowErrorOnSearchErrorSystem : MonoBehaviour
     {
+        private ErrorScreen errorScreen;
+        private SearchSettingsRuntime searchSettingsRuntime;
+
+        private void Awake()
+        {
+            errorScreen = FindObjectOfType<ErrorScreen>();
+            searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
+        }
+
         private void Start()
         {
-            SearchSettings.OnSearchError.AddListener(SearchErrorAction);
+            searchSettingsRuntime.OnSearchError.AddListener(SearchErrorAction);
         }
 
         private void SearchErrorAction()
         {
-            if (!ErrorScreen.EnableComponent.Enable)
+            if (!errorScreen.EnableComponent.Enable)
             {
-                ErrorScreen.EnableComponent.ShowRequest?.Invoke();
+                errorScreen.EnableComponent.ShowRequest?.Invoke();
             }
 
-            StartCoroutine(DelayedShutdown(ErrorScreenSettings.ShutdownDelay));
+            StartCoroutine(DelayedShutdown(ErrorScreenSettings.Instance.ShutdownDelay));
         }
 
         private IEnumerator DelayedShutdown(float delay)
         {
             yield return new WaitForSeconds(delay);
 
-            if (ErrorScreen.EnableComponent.Enable)
+            if (errorScreen.EnableComponent.Enable)
             {
-                ErrorScreen.EnableComponent.HideRequest?.Invoke();
+                errorScreen.EnableComponent.HideRequest?.Invoke();
             }
         }
     }

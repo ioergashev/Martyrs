@@ -9,34 +9,47 @@ namespace PSTGU
 {
     public class BuildDetailsSystem : MonoBehaviour
     {
+        private DetailsWindow detailsWindow;
+        private WindowsSettingsRuntime windowsSettingsRuntime;
+        private DetailsSettingsRuntime detailsSettingsRuntime;
+        private ManagerData managerData;
+
+        private void Awake()
+        {
+            detailsWindow = FindObjectOfType<DetailsWindow>();
+            windowsSettingsRuntime = FindObjectOfType<WindowsSettingsRuntime>();
+            detailsSettingsRuntime = FindObjectOfType<DetailsSettingsRuntime>();
+            managerData = FindObjectOfType<ManagerData>();
+        }
+
         private void Start()
         {
-            WindowsSettings.OnStartTransition.AddListener(StartWindowTransitionAction);
+            windowsSettingsRuntime.OnStartTransition.AddListener(StartWindowTransitionAction);
         }
 
         private void StartWindowTransitionAction()
         {
             // Если другое окно
-            if (WindowsSettings.TargetWindow != Windows.Details)
+            if (windowsSettingsRuntime.TargetWindow != Windows.Details)
             {
                 return;
             }
 
             // Установить контент
-            SetCotentData(DetailsSettings.Content);
+            SetCotentData(detailsSettingsRuntime.Content);
         }
 
         private void SetCotentData(PersonContent content)
         {
-            DetailsWindow.View.NameTxt.text = content.data.ФИО;
+            detailsWindow.View.NameTxt.text = content.data.ФИО;
 
-            DetailsWindow.View.SanTxt.text = string.IsNullOrEmpty(content.data.Сан_ЦеркСлужение) ?
+            detailsWindow.View.SanTxt.text = string.IsNullOrEmpty(content.data.Сан_ЦеркСлужение) ?
                 "Данные отсутствуют" : content.data.Сан_ЦеркСлужение;
 
-            DetailsWindow.View.ChinTxt.text = string.IsNullOrEmpty(content.data.Канонизация.Чин_святости)?
+            detailsWindow.View.ChinTxt.text = string.IsNullOrEmpty(content.data.Канонизация.Чин_святости)?
                 "Данные отсутствуют": content.data.Канонизация.Чин_святости;
 
-            DetailsWindow.View.CommentTxt.text = string.IsNullOrEmpty(content.data.Комментарий) ?
+            detailsWindow.View.CommentTxt.text = string.IsNullOrEmpty(content.data.Комментарий) ?
                 "Данные отсутствуют" : content.data.Комментарий;
 
             // Загруить фотографии и установить первую фотографию
@@ -46,19 +59,19 @@ namespace PSTGU
         private IEnumerator LoadPhotosAndSetFirstCoroutine(PersonContent content)
         {
             // Установить подпись по-умолчанию
-            DetailsWindow.View.PhotoSignTxt.text = string.Empty;
+            detailsWindow.View.PhotoSignTxt.text = string.Empty;
 
             // Показать изображение загрузки
-            DetailsWindow.View.LoadingImg.gameObject.SetActive(true);
+            detailsWindow.View.LoadingImg.gameObject.SetActive(true);
 
-            // Загрузить все фотографии по данному досье
-            yield return ManagerData.LoadPersonPhotos(content.data.Фотографии);
+            // Загрузить недоставющие фотографии по данному досье
+            yield return managerData.LoadUnloadedPhotos(content.data.Фотографии);
 
             // Спрятать изображение загрузки
-            DetailsWindow.View.LoadingImg.gameObject.SetActive(false);
+            detailsWindow.View.LoadingImg.gameObject.SetActive(false);
 
             // Показать изображение по-умолчанию
-            DetailsWindow.View.DefaultImg.gameObject.SetActive(true);
+            detailsWindow.View.DefaultImg.gameObject.SetActive(true);
 
             // Получить первую фотографию
             var photoItem = content.data.Фотографии.FirstOrDefault(p => p.Texture != null);
@@ -69,16 +82,16 @@ namespace PSTGU
             if (photo != null)
             {
                 // Спрятать изображение по-умолчанию
-                DetailsWindow.View.DefaultImg.gameObject.SetActive(false);
+                detailsWindow.View.DefaultImg.gameObject.SetActive(false);
 
                 // Установить фотографию
-                DetailsWindow.View.PhotoImg.texture = photo;
+                detailsWindow.View.PhotoImg.texture = photo;
 
                 // Настроить соотношение сторон
-                DetailsWindow.View.PhotoAspectRatio.aspectRatio = (float)photo.width / photo.height;
+                detailsWindow.View.PhotoAspectRatio.aspectRatio = (float)photo.width / photo.height;
 
                 // Установить подпись
-                DetailsWindow.View.PhotoSignTxt.text = photoItem.Подпись;
+                detailsWindow.View.PhotoSignTxt.text = photoItem.Подпись;
             }
         }
     }

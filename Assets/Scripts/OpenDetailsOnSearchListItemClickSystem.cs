@@ -8,15 +8,26 @@ namespace PSTGU
 {
     public class OpenDetailsOnSearchListItemClickSystem : MonoBehaviour
     {
+        private ManagerWindows managerWindows;
+        private SearchSettingsRuntime searchSettingsRuntime;
+        private DetailsSettingsRuntime detailsSettingsRuntime;
+
+        private void Awake()
+        {
+            managerWindows = FindObjectOfType<ManagerWindows>();
+            searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
+            detailsSettingsRuntime = FindObjectOfType<DetailsSettingsRuntime>();
+        }
+
         private void Start()
         {
-            SearchSettings.OnSearchListUpdated.AddListener(SearchListUpdatedAction);
+            searchSettingsRuntime.OnSearchListUpdated.AddListener(SearchListUpdatedAction);
         }
 
         private void SearchListUpdatedAction()
         {
             // Подписаться на нажатие элементов списка
-            foreach(var item in SearchSettings.PersonList)
+            foreach(var item in searchSettingsRuntime.PersonList)
             {
                 item.View.OpenDetailsBtn.onClick.AddListener(() => ItemButtonClickAction(item));
             }
@@ -25,9 +36,9 @@ namespace PSTGU
         private void ItemButtonClickAction(PersonListItem item)
         {
             // Передать данные о записи
-            DetailsSettings.Content = item.Content;
+            detailsSettingsRuntime.Content = item.Content;
 
-            ManagerWindows.OpenWindow(Windows.Details);
+            managerWindows.OpenWindow(Windows.Details);
         }
     }
 }

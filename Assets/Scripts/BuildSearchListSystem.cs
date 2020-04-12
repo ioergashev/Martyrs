@@ -4,25 +4,36 @@ namespace PSTGU
 {
     public class BuildSearchListSystem : MonoBehaviour
     {
+        private SearchWindow searchWindow;
+        private SearchSettingsRuntime searchSettingsRuntime;
+        private DataRuntime dataRuntime;
+
+        private void Awake()
+        {
+            searchWindow = FindObjectOfType<SearchWindow>();
+            searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
+            dataRuntime = FindObjectOfType<DataRuntime>();
+        }
+
         private void Start()
         {
-            SearchSettings.OnSearchComplite.AddListener(SearchCompliteAction);
+            searchSettingsRuntime.OnSearchComplite.AddListener(SearchCompliteAction);
         }
 
         private void SearchCompliteAction()
         {
             // Очистить старый список
-            SearchSettings.PersonList.ForEach(item => Destroy(item.gameObject));
-            SearchSettings.PersonList.Clear();
+            searchSettingsRuntime.PersonList.ForEach(item => Destroy(item.gameObject));
+            searchSettingsRuntime.PersonList.Clear();
 
-            for (int i = 0; i < Data.SearchResponse.Count; i++)
+            for (int i = 0; i < dataRuntime.SearchResponse.Count; i++)
             {
                 // Добавить элемент в список
-                var item = Instantiate(SearchSettings.SearchListItemPrefab, 
-                    SearchWindow.SearchList.SearchListContainer).GetComponent<PersonListItem>();
+                var item = Instantiate(SearchSettings.Instance.SearchListItemPrefab, 
+                    searchWindow.SearchList.SearchListContainer).GetComponent<PersonListItem>();
 
                 // Выгрузить информацию о личности
-                item.Content = Data.SearchResponse[i];
+                item.Content = dataRuntime.SearchResponse[i];
 
                 // Отобразить имя
                 item.View.NameTxt.text = FormatName(item.Content.data);
@@ -37,11 +48,11 @@ namespace PSTGU
                 item.View.SanTxt.text = FormatSan(item.Content.data);
 
                 // Добавить элемент в список
-                SearchSettings.PersonList.Add(item);
+                searchSettingsRuntime.PersonList.Add(item);
             }
 
             // Сообщить о обновлении списка
-            SearchSettings.OnSearchListUpdated?.Invoke();
+            searchSettingsRuntime.OnSearchListUpdated?.Invoke();
         }
 
         private string FormatDeathDate(PersonContent.Death death)
@@ -102,23 +113,31 @@ namespace PSTGU
 
         private string FormatName(PersonContent.PersonData personData)
         {
-            // Форматировать чин
-            var chin = MakeFirstCharUpper(personData.Канонизация.Чин_святости);
+            // По умолчанию только ФИО
+            var result = personData.ФИО;
 
-            // Настроить текст в зависимости от наличия чина
-            var result = string.IsNullOrEmpty(chin) ? personData.ФИО : chin + " " + personData.ФИО;
+            // Форматировать чин
+            var chin = MakeFirstCharCase(personData.Канонизация.Чин_святости, false);
+
+            // Если имеется чин
+            if (!string.IsNullOrEmpty(chin))
+            {
+                // Прибавить чин к имени
+                result += ", " + chin;
+            }
 
             return result;
         }
 
         private string FormatSan(PersonContent.PersonData personData)
         {
-            var result = MakeFirstCharUpper(personData.Сан_ЦеркСлужение);
+            var result = MakeFirstCharCase(personData.Сан_ЦеркСлужение);
 
             return result;
         }
 
-        private string MakeFirstCharUpper(string str)
+        /// <param name="upper"> true - верхний регистр; false - нижний регистр </param>
+        private string MakeFirstCharCase(string str, bool upper = true)
         {
             // Если строка не пустая
             if (!string.IsNullOrEmpty(str) && str.Length >=2)

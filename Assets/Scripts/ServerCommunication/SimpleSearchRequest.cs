@@ -22,7 +22,7 @@ namespace PSTGU.ServerCommunication
 
         public override void InitRequest()
         {
-            _unityWebRequest = UnityWebRequest.Get(URL);
+            unityWebRequest = UnityWebRequest.Get(URL);
         }
     }
 }

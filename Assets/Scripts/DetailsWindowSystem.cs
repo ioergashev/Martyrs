@@ -8,14 +8,23 @@ namespace PSTGU
 {
     public class DetailsWindowSystem : MonoBehaviour
     {
+        private DetailsWindow detailsWindow;
+        private ManagerWindows managerWindows;
+
+        private void Awake()
+        {
+            detailsWindow = FindObjectOfType<DetailsWindow>();
+            managerWindows = FindObjectOfType<ManagerWindows>();
+        }
+
         private void Start()
         {
-            DetailsWindow.View.BackBtn.onClick.AddListener(BackBtnClickAction);
+            detailsWindow.View.BackBtn.onClick.AddListener(BackBtnClickAction);
         }
 
         private void BackBtnClickAction()
         {
-            ManagerWindows.OpenWindow(Windows.Search);
+            managerWindows.OpenWindow(Windows.Search);
         }
     }
 }
