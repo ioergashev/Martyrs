@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DanielLochner.Assets.SimpleScrollSnap;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace PSTGU
@@ -19,5 +20,7 @@ namespace PSTGU
         public AspectRatioFitter PhotoAspectRatio;
         public Image DefaultImg;
         public Image LoadingImg;
+        public Transform PhotosContainer;
+        public SimpleScrollSnap PhotosScroll;
     }
 }

@@ -7,6 +7,6 @@ namespace PSTGU
 {
     public class ScrollPhotosItem : MonoBehaviour
     {
-        public ScrollPhotosItemView View;
+        public ScrollPhotosItemViewComponent View;
     }
 }

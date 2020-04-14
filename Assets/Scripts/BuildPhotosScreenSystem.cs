@@ -7,14 +7,16 @@ using UnityEngine.UI;
 
 namespace PSTGU
 {
-    public class BuildDetailsPhotosSystem : MonoBehaviour
+    public class BuildPhotosScreenSystem : MonoBehaviour
     {
-        private DetailsWindow _detailsWindow;
+        private PhotosScreen _photosScreen;
+        private PhotosScreenSettingsRuntime _photosScreenSettingsRuntime;
         private DetailsSettingsRuntime _detailsSettingsRuntime;
 
         private void Awake()
         {
-            _detailsWindow = FindObjectOfType<DetailsWindow>();
+            _photosScreen = FindObjectOfType<PhotosScreen>();
+            _photosScreenSettingsRuntime = FindObjectOfType<PhotosScreenSettingsRuntime>();
             _detailsSettingsRuntime = FindObjectOfType<DetailsSettingsRuntime>();
         }
 
@@ -31,17 +33,17 @@ namespace PSTGU
         private void SetPhotos()
         {
             // Очистить старый список
-            _detailsSettingsRuntime.ScrollPhotos.ForEach(p => Destroy(p.gameObject));
-            _detailsSettingsRuntime.ScrollPhotos.Clear();
+            _photosScreenSettingsRuntime.ScrollPhotos.ForEach(p => Destroy(p.gameObject));
+            _photosScreenSettingsRuntime.ScrollPhotos.Clear();
 
             // Получить список фотографий
             var photos = _detailsSettingsRuntime.Content.data.Фотографии.Select(p => p.Texture).Where(t => t != null);
 
             // Установить фотографии
-            foreach(var photo in photos)
+            foreach (var photo in photos)
             {
                 // Вставить фотографию
-                var instance = Instantiate(DetailsSettings.Instance.PhotoPrefab, _detailsWindow.View.PhotosContainer)
+                var instance = Instantiate(DetailsSettings.Instance.PhotoPrefab, _photosScreen.View.PhotosContainer)
                     .GetComponent<ScrollPhotosItem>();
 
                 // Установить фотографию
@@ -52,7 +54,7 @@ namespace PSTGU
             }
 
             // Сообщить, что фотографии установлены
-            _detailsSettingsRuntime.OnPhotosSet?.Invoke();
+            _photosScreenSettingsRuntime.OnPhotosSet?.Invoke();
         }
     }
 }
