@@ -12,5 +12,14 @@ namespace PSTGU
 
         [HideInInspector]
         public UnityEvent OnPhotosSet = new UnityEvent();
+
+        [HideInInspector]
+        public UnityEvent ResetPhotosRequest = new UnityEvent();
+
+        [HideInInspector]
+        public UnityEvent SetPhotosRequest = new UnityEvent();
+
+        [HideInInspector]
+        public List<PersonContent.PhotoItem> Photos;
     }
 }

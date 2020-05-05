@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17485fcbe3fdb9d4d8d3edbcd6267d72, type: 3}
-  m_Name: SearchSettings
+  m_Script: {fileID: 11500000, guid: f07bdc0d5087bb74bae0d15b96311928, type: 3}
+  m_Name: PhotosScreenSettings
   m_EditorClassIdentifier: 
-  SearchListItemPrefab: {fileID: 7509117958832085004, guid: 06ee7bff821d0b74db4877d1667f4ca0,
+  PhotoPrefab: {fileID: 1970236839490012158, guid: 3665a5cd18473774faa8b128120bb469,
     type: 3}

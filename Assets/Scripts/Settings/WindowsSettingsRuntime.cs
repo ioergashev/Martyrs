@@ -7,13 +7,23 @@ namespace PSTGU
 {
     public enum Windows
     {
+        None,
         Search,
-        Details,
-        None
+        Details
+    }
+
+    public enum Screens
+    {
+        None,
+        Loading,
+        Error,
+        Photos
     }
 
     public class WindowsSettingsRuntime : MonoBehaviour
     {
+        public Windows StartWindow = Windows.Search;
+
         [HideInInspector]
         public Windows CurrentWindow = Windows.None;
         
@@ -30,6 +40,12 @@ namespace PSTGU
         public UnityEvent OnStartTransition = new UnityEvent();
 
         [HideInInspector]
+        public UnityEvent OnStartOpenDetails = new UnityEvent();
+
+        [HideInInspector]
         public UnityEvent OnEndTransition = new UnityEvent();
+
+        [HideInInspector]
+        public List<Screens> OpenedScreens = new List<Screens>();
     }
 }

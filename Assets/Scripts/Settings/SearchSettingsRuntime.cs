@@ -61,6 +61,9 @@ namespace PSTGU
         }
 
         [HideInInspector]
+        public UnityEvent SearchRequest = new UnityEvent();
+
+        [HideInInspector]
         public UnityEvent OnStartSearch = new UnityEvent();
         [HideInInspector]
         public UnityEvent OnSearchComplite = new UnityEvent();

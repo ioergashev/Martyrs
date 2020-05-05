@@ -21,5 +21,8 @@ namespace PSTGU
 
         [HideInInspector]
         public UnityEvent OnPhotosSet = new UnityEvent();
+
+        [HideInInspector]
+        public UnityEvent OnContentSet = new UnityEvent();
     }
 }

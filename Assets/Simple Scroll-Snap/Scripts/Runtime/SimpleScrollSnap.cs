@@ -761,7 +761,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                 return;
             }
 
-            panel = Instantiate(panel, Vector2.zero, Quaternion.identity, Content);
+            panel = Instantiate(panel, Vector3.zero, Quaternion.identity, Content);
             panel.transform.SetSiblingIndex(index);
 
             if (Validate())
@@ -775,6 +775,14 @@ namespace DanielLochner.Assets.SimpleScrollSnap
                     startingPanel = targetPanel + 1;
                 }
                 Setup(true);
+            }
+
+            // fix Scroll Snap issue
+            if (float.IsNaN(panel.transform.position.x)
+                || float.IsNaN(panel.transform.position.y)
+                || float.IsNaN(panel.transform.position.z))
+            {
+                panel.transform.position = Vector3.zero;
             }
         }
 

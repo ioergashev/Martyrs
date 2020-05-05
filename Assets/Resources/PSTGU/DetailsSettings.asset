@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90eb8a0f03cba8a42b916d7e4a18c638, type: 3}
   m_Name: DetailsSettings
   m_EditorClassIdentifier: 
+  PhotoPrefab: {fileID: 1322651242985952046, guid: a5a09d6808b56df4da180ef2f6dffd1a,
+    type: 3}
