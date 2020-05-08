@@ -30,10 +30,17 @@ namespace PSTGU
                 return;
             }
 
-            // Если открыто окно поиска, нет открытых панелей и не выполняется поиск
-            if (windowsSettingsRuntime.CurrentWindow == Windows.Search
-                && windowsSettingsRuntime.OpenedScreens.Count == 0
-                && searchSettingsRuntime.SearchCoroutine == null)
+            // Если открыто окно поиска, 
+            // не выполняется поиск
+            // нет открытых панелей за исключением окна приветствия,
+            bool allowSearch =  
+                windowsSettingsRuntime.CurrentWindow == Windows.Search
+                && searchSettingsRuntime.SearchCoroutine == null
+                && (windowsSettingsRuntime.OpenedScreens.Count == 0
+                    || (windowsSettingsRuntime.OpenedScreens.Count == 1
+                        && windowsSettingsRuntime.OpenedScreens.Contains(Screens.Welcome)));
+
+            if (allowSearch)
             {
                 // Выполнить поиск
                 searchSettingsRuntime.SearchRequest?.Invoke();

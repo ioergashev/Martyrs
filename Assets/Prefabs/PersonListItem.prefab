@@ -716,12 +716,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.53840417, b: 0.83800006, a: 1}
+  m_Color: {r: 0, g: 0.45098042, b: 0.7058824, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -842,6 +842,8 @@ MonoBehaviour:
         "\u041C\u0435\u0441\u0442\u043E": 
         "\u0422\u0435\u043A\u0441\u0442": 
       "\u0424\u043E\u0442\u043E\u0433\u0440\u0430\u0444\u0438\u0438": []
+      "\u0421\u043E\u0431\u044B\u0442\u0438\u044F": []
+      "\u0411\u0438\u0431\u043B\u0438\u043E\u0433\u0440\u0430\u0444\u0438\u044F": []
     docId: 
     key: 
     url: 
@@ -863,7 +865,6 @@ MonoBehaviour:
   NameTxt: {fileID: 7509117958866896607}
   BirthDateTxt: {fileID: 3956055733205030924}
   DeathDateTxt: {fileID: 6558655735787100828}
-  ChinTxt: {fileID: 0}
   SanTxt: {fileID: 6558655734801601001}
 --- !u!114 &477780611194042095
 MonoBehaviour:
@@ -877,8 +878,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 1
 --- !u!1 &7509117958866896601
 GameObject:

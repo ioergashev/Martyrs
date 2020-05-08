@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace PSTGU
 {
-    [RequireComponent(typeof(LoadingViewComponent))]
+    [RequireComponent(typeof(WelcomeViewComponent))]
     [RequireComponent(typeof(EnableWindowComponent))]
-    public class LoadingScreen : MonoBehaviour
+    public class WelcomeScreen : MonoBehaviour
     {
         [HideInInspector]
-        public LoadingViewComponent View;
+        public WelcomeViewComponent View;
 
         [HideInInspector]
         public EnableWindowComponent EnableComponent;
 
         private void Awake()
         {
-            View = GetComponent<LoadingViewComponent>();
+            View = GetComponent<WelcomeViewComponent>();
             EnableComponent = GetComponent<EnableWindowComponent>();
         }
     }

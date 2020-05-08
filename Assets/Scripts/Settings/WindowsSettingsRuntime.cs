@@ -17,7 +17,8 @@ namespace PSTGU
         None,
         Loading,
         Error,
-        Photos
+        Photos,
+        Welcome
     }
 
     public class WindowsSettingsRuntime : MonoBehaviour
@@ -31,6 +32,9 @@ namespace PSTGU
         public Windows TargetWindow = Windows.None;
 
         [HideInInspector]
+        public Coroutine CheckDoubleClickBackCoroutine;
+
+        [HideInInspector]
         public bool InTransition = false;
 
         [HideInInspector]
@@ -41,6 +45,9 @@ namespace PSTGU
 
         [HideInInspector]
         public UnityEvent OnStartOpenDetails = new UnityEvent();
+
+        [HideInInspector]
+        public UnityEvent OnStartCloseWelcome = new UnityEvent();
 
         [HideInInspector]
         public UnityEvent OnEndTransition = new UnityEvent();

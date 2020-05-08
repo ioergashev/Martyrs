@@ -16,6 +16,7 @@ namespace PSTGU
         private LoadingScreen _loadingScreen;
         private ErrorScreen _errorScreen;
         private PhotosScreen _photosScreen;
+        private WelcomeScreen _welcomeScreen;
 
         private void Awake()
         {
@@ -27,6 +28,7 @@ namespace PSTGU
             _loadingScreen = FindObjectOfType<LoadingScreen>();
             _errorScreen = FindObjectOfType<ErrorScreen>();
             _photosScreen = FindObjectOfType<PhotosScreen>();
+            _welcomeScreen = FindObjectOfType<WelcomeScreen>();
         }
 
         public void CloseLastOpenedScreen()
@@ -75,7 +77,13 @@ namespace PSTGU
                     _windowsSettingsRuntime.OpenedScreens.Remove(screen);
 
                     // Закрыть окно
-                    enableComponent.HideRequest?.Invoke();  
+                    enableComponent.HideRequest?.Invoke();
+
+                    if (screen == Screens.Welcome)
+                    {
+                        // Сообщить о начале закрытия окна
+                        _windowsSettingsRuntime.OnStartCloseWelcome?.Invoke();
+                    }
                 }
                 
             }
@@ -97,6 +105,9 @@ namespace PSTGU
                     break;
                 case Screens.Photos:
                     enableComponent = _photosScreen.EnableComponent;
+                    break;
+                case Screens.Welcome:
+                    enableComponent = _welcomeScreen.EnableComponent;
                     break;
 
                 default:
