@@ -35,6 +35,8 @@ namespace PSTGU
             public List<PhotoItem> Фотографии;
 
             public List<Event> События;
+
+            public List<Source> Библиография;
         }
 
         [Serializable]
@@ -69,12 +71,9 @@ namespace PSTGU
         [Serializable]
         public class PhotoItem
         {
-            public string Id;
-            public bool ExistInCash;
             public int NUM;
             public Photo Фото_сжатое;
             public string Подпись;
-            public string FileURL;
             public Texture2D Texture;
         }
 
@@ -90,6 +89,14 @@ namespace PSTGU
         {
             public string Датировка;
             public string Текст;
+        }
+
+        [Serializable]
+        public class Source
+        {
+            public int NUM;
+            public string Название;
+            public string Тип;
         }
     }
 }

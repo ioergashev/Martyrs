@@ -28,6 +28,9 @@ namespace PSTGU
 
             // Подписаться на кнопку событий
             detailsWindow.View.EventsBtn.onClick.AddListener(EventsBtnClickAction);
+
+            // Подписаться на кнопку библиографии
+            detailsWindow.View.BibliographyBtn.onClick.AddListener(BibliographyBtnClickAction);
         }
 
         private void BackBtnClickAction()
@@ -46,6 +49,12 @@ namespace PSTGU
         {
             // Включить/выключить события
             detailsWindow.View.EventsBGImg.gameObject.SetActive(!detailsWindow.View.EventsBGImg.gameObject.activeSelf);
+        }
+
+        private void BibliographyBtnClickAction()
+        {
+            // Включить/выключить библиографию
+            detailsWindow.View.BibliographyBGImg.gameObject.SetActive(!detailsWindow.View.BibliographyBGImg.gameObject.activeSelf);
         }
     }
 }

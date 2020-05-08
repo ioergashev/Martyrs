@@ -22,5 +22,8 @@ namespace PSTGU
         public LayoutGroup InfoLayout;
         public LayoutGroup ContentLayout;
         public LayoutGroup AttributesLayout;
+        public Button BibliographyBtn;
+        public Image BibliographyBGImg;
+        public Text BibliographyTxt;
     }
 }

@@ -54,7 +54,7 @@ namespace PSTGU
             // Установить ФИО
             detailsWindow.View.NameTxt.text = content.data.ФИО;
 
-            //---------------------------------------------
+            //--- Аттрибуты ---
             // Проверить наличие аттрибутов
             bool sanExist = !string.IsNullOrEmpty(content.data.Сан_ЦеркСлужение);
             bool chinExist = !string.IsNullOrEmpty(content.data.Канонизация.Чин_святости);
@@ -74,31 +74,44 @@ namespace PSTGU
             // Установить чин святости
             detailsWindow.View.ChinTxt.text = content.data.Канонизация.Чин_святости;
 
-            //---------------------------------------------
+            //--- Комментарий ---
             // Проверить наличие комментария
             bool commentExist = !string.IsNullOrEmpty(content.data.Комментарий);
 
             // Включить/выключить кнопку комментария
             detailsWindow.View.CommentBtn.gameObject.SetActive(commentExist);
 
-            // Выключить комментарий
-            detailsWindow.View.CommentBGImg.gameObject.SetActive(false);
+            // Включить/выключить комментарий
+            detailsWindow.View.CommentBGImg.gameObject.SetActive(commentExist);
 
             // Установить комментарий
             detailsWindow.View.CommentTxt.text = content.data.Комментарий;
 
-            //---------------------------------------------
+            //--- События ---
             // Проверить наличие событий
             bool eventsExist = content.data.События != null && content.data.События.Count != 0;
 
             // Включить/выключить кнопку событий
             detailsWindow.View.EventsBtn.gameObject.SetActive(eventsExist);
 
-            // Выключить события
-            detailsWindow.View.EventsBGImg.gameObject.SetActive(false);
+            // Включить/выключить события
+            detailsWindow.View.EventsBGImg.gameObject.SetActive(eventsExist);
 
             // Установить события
             detailsWindow.View.EventsTxt.text = FormatEvents(content.data.События);
+
+            //--- Библиография ---
+            // Проверить наличие библиографии
+            bool bibliographyExist = content.data.Библиография != null && content.data.Библиография.Count != 0;
+
+            // Включить/выключить кнопку библиографии
+            detailsWindow.View.BibliographyBtn.gameObject.SetActive(bibliographyExist);
+
+            // Включить/выключить библиографию
+            detailsWindow.View.BibliographyBGImg.gameObject.SetActive(bibliographyExist);
+
+            // Установить библиографию
+            detailsWindow.View.BibliographyTxt.text = FormatBibliography(content.data.Библиография);
 
             detailsSettingsRuntime.OnContentSet?.Invoke();
         }
@@ -119,6 +132,20 @@ namespace PSTGU
                 {
                     result += string.Format("{0}\n", событие.Текст);
                 }
+            }
+
+            return result;
+        }
+
+        private string FormatBibliography(List<PersonContent.Source> bibliography)
+        {
+            string result = string.Empty;
+
+            foreach (var source in bibliography)
+            {
+                string type = string.IsNullOrEmpty(source.Тип) ? "документ" : source.Тип;
+
+                result += string.Format("{0}. \"{1}\" ({2})\n", source.NUM, source.Название, type);
             }
 
             return result;
