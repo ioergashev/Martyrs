@@ -64,19 +64,19 @@ namespace PSTGU
             if (death.Год >= 1)
             {
                 // Записать год
-                result = death.Год.ToString();
+                result = death.Год.ToString("D4");
 
                 // Если месяц указан
                 if (death.Месяц >= 1)
                 {
                     // Записать месяц
-                    result = death.Месяц.ToString() + "." + result;
+                    result = death.Месяц.ToString("D2") + "-" + result;
 
                     // Если день указан
                     if (death.День >= 1)
                     {
                         // Записать день
-                        result = death.День.ToString() + "." + result;
+                        result = death.День.ToString("D2") + "-" + result;
                     }
                 }
             }
@@ -92,19 +92,19 @@ namespace PSTGU
             if (birth.Год >= 1)
             {
                 // Записать год
-                result = birth.Год.ToString();
+                result = birth.Год.ToString("D4");
 
                 // Если месяц указан
                 if (birth.Месяц >= 1)
                 {
                     // Записать месяц
-                    result = birth.Месяц.ToString() + "." + result;
+                    result = birth.Месяц.ToString("D2") + "-" + result;
 
                     // Если день указан
                     if (birth.День >= 1)
                     {
                         // Записать день
-                        result = birth.День.ToString() + "." + result;
+                        result = birth.День.ToString("D2") + "-" + result;
                     }
                 }
             }
