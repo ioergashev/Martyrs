@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using UnityEngine.UI;
 
 namespace PSTGU
 {
@@ -21,7 +22,10 @@ namespace PSTGU
 
         private void Update()
         {
-            if (!Input.GetKeyUp(KeyCode.Return))
+            var touchKeyboard = searchWindow.View.SearchInput.touchScreenKeyboard;
+
+            if (!Input.GetKeyUp(KeyCode.Return) 
+                && !(touchKeyboard != null && touchKeyboard.status == TouchScreenKeyboard.Status.Done))
             {
                 return;
             }
