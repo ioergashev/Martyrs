@@ -36,6 +36,22 @@ namespace PSTGU
                 // Открыть окно поиска
                 _managerWindows.OpenWindow(Windows.Search);
             }
+            // Если открыто окно поиска
+            else if (_windowsSettingsRuntime.CurrentWindow == Windows.Search)
+            {
+                // Завершить работу
+                Quit();
+            }
+        }
+
+        private void Quit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+    //Application.Quit();
+    System.Diagnostics.Process.GetCurrentProcess().Kill();
+#endif
         }
     }
 }
