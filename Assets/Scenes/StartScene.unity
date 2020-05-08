@@ -2987,8 +2987,8 @@ MonoBehaviour:
   m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
-  m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 400
+  m_DecelerationRate: 0.3
+  m_ScrollSensitivity: 800
   m_Viewport: {fileID: 1911746170}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1866644679}
@@ -4767,10 +4767,10 @@ MonoBehaviour:
   nextButton: {fileID: 0}
   pagination: {fileID: 0}
   toggleNavigation: 1
-  snapTarget: 0
-  snappingSpeed: 20
+  snapTarget: 2
+  snappingSpeed: 15
   thresholdSnappingSpeed: 400
-  hardSnap: 1
+  hardSnap: 0
   onPanelChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5829,10 +5829,10 @@ MonoBehaviour:
   nextButton: {fileID: 0}
   pagination: {fileID: 0}
   toggleNavigation: 1
-  snapTarget: 0
-  snappingSpeed: 20
+  snapTarget: 2
+  snappingSpeed: 15
   thresholdSnappingSpeed: 400
-  hardSnap: 1
+  hardSnap: 0
   onPanelChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -9799,8 +9799,8 @@ MonoBehaviour:
   m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
-  m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 400
+  m_DecelerationRate: 0.3
+  m_ScrollSensitivity: 800
   m_Viewport: {fileID: 1888844763}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 2025981664}
