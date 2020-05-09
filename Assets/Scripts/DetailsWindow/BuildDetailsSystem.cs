@@ -31,7 +31,7 @@ namespace PSTGU
             windowsSettingsRuntime.OnStartOpenDetails.AddListener(StartOpenDetailsAction);
 
             // Ожидать завершения загрузки всех фотографий
-            detailsSettingsRuntime.OnPhotosLoaded.AddListener(PhotosLoadedAction); 
+            detailsSettingsRuntime.OnPhotosLoaded.AddListener(PhotosLoadedAction);
         }
 
         private void PhotosLoadedAction()
@@ -193,23 +193,12 @@ namespace PSTGU
             {
                 var texture = photos[i].Texture;
 
-                // Если отсутсвует текстура
-                if (texture == null)
+                var instance = AddPhoto(texture);
+
+                if (instance == null)
                 {
                     continue;
                 }
-
-                // Добавить префаб в Scroll Snap
-                ScrollSnap.AddToBack(DetailsSettings.Instance.PhotoPrefab);
-
-                // Получить элемент из Scroll Snap
-                var instance = ScrollSnap.Panels.Last().GetComponent<ScrollPhotosItem>();
-
-                // Установить текстуру
-                instance.View.PhotoImg.texture = texture;
-
-                // Настроить соотношение сторон
-                instance.View.PhotoAspectRatio.aspectRatio = (float)texture.width / texture.height;
 
                 // Добавить фото в список фотографий
                 detailsSettingsRuntime.ScrollPhotos.Add(instance);
@@ -217,6 +206,29 @@ namespace PSTGU
 
             // Сообщить, что фотографии установлены
             detailsSettingsRuntime.OnPhotosSet?.Invoke();
+        }
+
+        private ScrollPhotosItem AddPhoto(Texture texture)
+        {
+            // Если отсутствует текстура
+            if (texture == null)
+            {
+                return null;
+            }
+
+            // Добавить префаб в Scroll Snap
+            ScrollSnap.AddToBack(DetailsSettings.Instance.PhotoPrefab);
+
+            // Получить элемент из Scroll Snap
+            var instance = ScrollSnap.Panels.Last().GetComponent<ScrollPhotosItem>();
+
+            // Установить текстуру
+            instance.View.PhotoImg.texture = texture;
+
+            // Настроить соотношение сторон
+            instance.View.PhotoAspectRatio.aspectRatio = (float)texture.width / texture.height;
+
+            return instance;
         }
     }
 }

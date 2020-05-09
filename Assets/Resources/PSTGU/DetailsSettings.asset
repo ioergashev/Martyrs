@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PhotoPrefab: {fileID: 1322651242985952046, guid: a5a09d6808b56df4da180ef2f6dffd1a,
     type: 3}
+  TemplatePhotoTexture: {fileID: 2800000, guid: 13575253b4a4aab4cabe747be74515ea,
+    type: 3}

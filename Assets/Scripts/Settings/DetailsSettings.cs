@@ -25,5 +25,7 @@ namespace PSTGU
         }
 
         public GameObject PhotoPrefab;
+
+        public Texture TemplatePhotoTexture;
     }
 }

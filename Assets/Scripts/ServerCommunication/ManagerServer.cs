@@ -23,10 +23,22 @@ namespace PSTGU.ServerCommunication
             // Получить ответ
             var response = ParseResponse<SearchResponse>(request);
 
-            // Сохранить количество найденных записей
-            response.RecordsFoundCount = GetRecordsCount(request.UnityWebRequest);
+            SetRecordsCount(response, request);
 
             yield return response;
+        }
+
+        /// <summary> Указать количество найденных записей </summary>
+        private void SetRecordsCount(SearchResponse response, RequestBase request)
+        {
+            response.RecordsFoundCount = GetRecordsCount(request.UnityWebRequest);
+
+            // Обработка ошибок
+            if (response.RecordsFoundCount < 0)
+            {
+                response.error = "Некоректное значение заголовка X-Total-Count";
+                response.errorCode = 1;
+            }
         }
 
         private int GetRecordsCount(UnityWebRequest request)

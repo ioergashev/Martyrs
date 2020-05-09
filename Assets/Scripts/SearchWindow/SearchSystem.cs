@@ -77,8 +77,6 @@ namespace PSTGU
 
             if (response == null || response.IsError)
             {
-                Debug.LogError(response == null);
-
                 // Сообщить об ошибке
                 callback = searchSettingsRuntime.OnSearchError;
                 // Сбросить данные поиска
