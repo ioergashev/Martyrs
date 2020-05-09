@@ -24,18 +24,15 @@ namespace PSTGU
 
         private void Start()
         {
-            searchWindow.View.SearchBtn.onClick.AddListener(SearchBtnClickAction);
-            searchWindow.View.NextPageBtn.onClick.AddListener(NextPageBtnClickAction);
-            searchWindow.View.PrevPageBtn.onClick.AddListener(PrevPageBtnClickAction);
             searchSettingsRuntime.SearchRequest.AddListener(SearchRequestAction);
         }
         
-        private void SearchBtnClickAction()
+        private void SearchRequestAction()
         {
-            SearchRequestAction();
+            SearchAction(searchSettingsRuntime.SkipItemsCount);
         }
 
-        private void SearchRequestAction()
+        private void SearchAction(int skip = 0)
         {
             // Если поисковой запрос уже выполняется
             if (searchSettingsRuntime.SearchCoroutine != null)
@@ -47,51 +44,6 @@ namespace PSTGU
             ResetSearchSettings();
 
             // Начать поиск
-            searchSettingsRuntime.SearchCoroutine = StartCoroutine(SearchCoroutine(0));
-
-            // Сообщить о начале поиска
-            searchSettingsRuntime.OnStartSearch?.Invoke();
-        }
-
-        private void NextPageBtnClickAction()
-        {
-            // Если поисковой запрос уже выполняется
-            if (searchSettingsRuntime.SearchCoroutine != null)
-            {
-                return;
-            }
-
-            // Если не более одной страницы или последняя страница
-            if (searchSettingsRuntime.PagesCount <= 1 || searchSettingsRuntime.IsLastPage)
-            {
-                return;
-            }
-
-            // Начать поиск для следующей страницы
-            searchSettingsRuntime.SearchCoroutine = StartCoroutine(SearchCoroutine(searchSettingsRuntime.LastItemIndex + 1));
-
-            // Сообщить о начале поиска
-            searchSettingsRuntime.OnStartSearch?.Invoke();
-        }
-
-        private void PrevPageBtnClickAction()
-        {
-            // Если поисковой запрос уже выполняется
-            if (searchSettingsRuntime.SearchCoroutine != null)
-            {
-                return;
-            }
-
-            // Если не более одной страницы или первая страница
-            if (searchSettingsRuntime.PagesCount <= 1 || searchSettingsRuntime.CurrentPageIndex <= 0)
-            {
-                return;
-            }
-
-            // Вычислить, сколько записей нужно пропустить
-            var skip = (searchSettingsRuntime.CurrentPageIndex - 1) * searchSettingsRuntime.ItemsPerPage;
-
-            // Начать поиск для предыдущей страницы
             searchSettingsRuntime.SearchCoroutine = StartCoroutine(SearchCoroutine(skip));
 
             // Сообщить о начале поиска

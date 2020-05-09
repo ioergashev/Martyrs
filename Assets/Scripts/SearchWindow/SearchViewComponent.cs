@@ -8,6 +8,8 @@ namespace PSTGU
         [Header("Search")]
         public InputField SearchInput;
         public Button SearchBtn;
+        public Scrollbar VertSearchScrollbar;
+
 
         [Header("Pages Navigation")]
         public Button NextPageBtn;

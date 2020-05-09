@@ -13,6 +13,9 @@ namespace PSTGU
         public int LastItemIndex = -1;
 
         [HideInInspector]
+        public int SkipItemsCount = 0;
+
+        [HideInInspector]
         public int ItemsCount = 0;
 
         public int PagesCount

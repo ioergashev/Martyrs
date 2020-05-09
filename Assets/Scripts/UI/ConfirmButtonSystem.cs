@@ -43,6 +43,8 @@ namespace PSTGU
             if (allowSearch)
             {
                 // Выполнить поиск
+                searchSettingsRuntime.SkipItemsCount = 0;
+
                 searchSettingsRuntime.SearchRequest?.Invoke();
             }
         }
