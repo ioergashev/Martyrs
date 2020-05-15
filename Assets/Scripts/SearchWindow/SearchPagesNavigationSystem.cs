@@ -35,8 +35,9 @@ namespace PSTGU
             SetButtomUIActive(true);
 
             searchWindow.View.RecordsFoundCountTxt.text = "Найдено записей: " + searchSettingsRuntime.ItemsCount;
-            searchWindow.View.CurrentPageTxt.text = (searchSettingsRuntime.CurrentPageIndex + 1).ToString();
-            searchWindow.View.PagesCountTxt.text = searchSettingsRuntime.PagesCount.ToString();
+            int currentPage = searchSettingsRuntime.CurrentPageIndex + 1;
+            int pagesCount = searchSettingsRuntime.PagesCount;
+            searchWindow.View.PagesCountTxt.text = string.Format("{0}/{1}", currentPage, pagesCount);
         }
 
         private void SearchErrorAction()

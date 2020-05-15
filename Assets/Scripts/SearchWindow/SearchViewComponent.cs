@@ -15,7 +15,6 @@ namespace PSTGU
         public Button NextPageBtn;
         public Button PrevPageBtn;
         public Text RecordsFoundCountTxt;
-        public Text CurrentPageTxt;
         public Text PagesCountTxt;
         public GameObject PagesNavigationContainer;
         public Transform SearchListContainer;

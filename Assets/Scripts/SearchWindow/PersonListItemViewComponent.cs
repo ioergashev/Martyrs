@@ -9,8 +9,7 @@ namespace PSTGU
     {
         public Button OpenDetailsBtn;
         public Text NameTxt;
-        public Text BirthDateTxt;
-        public Text DeathDateTxt;
+        public Text LifetimeTxt;
         public Text SanTxt;
     }
 }

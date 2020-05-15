@@ -39,11 +39,8 @@ namespace PSTGU
                 // Отобразить имя
                 item.View.NameTxt.text = FormatName(item.Content.data);
 
-                // Отобразить дату рождения
-                item.View.BirthDateTxt.text = FormatBirthDate(item.Content.data.Рождение);
-
-                // Отобразить дату смерти
-                item.View.DeathDateTxt.text = FormatDeathDate(item.Content.data.Кончина);
+                // Отобразить время жизни
+                item.View.LifetimeTxt.text = FormatLifetime(item.Content.data);
 
                 // Отобразить сан
                 item.View.SanTxt.text = FormatSan(item.Content.data);
@@ -56,29 +53,18 @@ namespace PSTGU
             searchSettingsRuntime.OnSearchListUpdated?.Invoke();
         }
 
-        private string FormatDeathDate(PersonContent.Death death)
+        private string FormatLifetime(PersonContent.PersonData personData)
         {
             string result = "?";
 
-            // Если год указан
-            if (death.Год >= 1)
+            string birth = FormatBirthDate(personData.Рождение);
+
+            string death = FormatDeathDate(personData.Кончина);
+
+            // Если исвестна хотя бы одна из дат
+            if (birth != "?" || death != "?")
             {
-                // Записать год
-                result = death.Год.ToString("D4");
-
-                // Если месяц указан
-                if (death.Месяц >= 1)
-                {
-                    // Записать месяц
-                    result = death.Месяц.ToString("D2") + "-" + result;
-
-                    // Если день указан
-                    if (death.День >= 1)
-                    {
-                        // Записать день
-                        result = death.День.ToString("D2") + "-" + result;
-                    }
-                }
+                result = string.Format("{0} — {1}", birth, death);
             }
 
             return result;
@@ -105,6 +91,34 @@ namespace PSTGU
                     {
                         // Записать день
                         result = birth.День.ToString("D2") + "-" + result;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private string FormatDeathDate(PersonContent.Death death)
+        {
+            string result = "?";
+
+            // Если год указан
+            if (death.Год >= 1)
+            {
+                // Записать год
+                result = death.Год.ToString("D4");
+
+                // Если месяц указан
+                if (death.Месяц >= 1)
+                {
+                    // Записать месяц
+                    result = death.Месяц.ToString("D2") + "-" + result;
+
+                    // Если день указан
+                    if (death.День >= 1)
+                    {
+                        // Записать день
+                        result = death.День.ToString("D2") + "-" + result;
                     }
                 }
             }
