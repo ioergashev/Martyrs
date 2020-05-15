@@ -10,6 +10,7 @@ namespace PSTGU
     public class ConfirmButtonSystem : MonoBehaviour
     {
         private SearchWindow searchWindow;
+        private WelcomeScreen welcomeScreen;
         private SearchSettingsRuntime searchSettingsRuntime;
         private WindowsSettingsRuntime windowsSettingsRuntime;
 
@@ -18,6 +19,7 @@ namespace PSTGU
             searchWindow = FindObjectOfType<SearchWindow>();
             searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
             windowsSettingsRuntime = FindObjectOfType<WindowsSettingsRuntime>();
+            welcomeScreen = FindObjectOfType<WelcomeScreen>();
         }
 
         private void Update()
@@ -38,7 +40,8 @@ namespace PSTGU
                 && searchSettingsRuntime.SearchCoroutine == null
                 && (windowsSettingsRuntime.OpenedScreens.Count == 0
                     || (windowsSettingsRuntime.OpenedScreens.Count == 1
-                        && windowsSettingsRuntime.OpenedScreens.Contains(Screens.Welcome)));
+                        && windowsSettingsRuntime.OpenedScreens.Contains(Screens.Welcome)
+                        && welcomeScreen.View.SearchInput.interactable));
 
             if (allowSearch)
             {

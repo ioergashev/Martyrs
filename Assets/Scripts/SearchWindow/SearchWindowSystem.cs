@@ -26,9 +26,11 @@ namespace PSTGU
 
         private void SearchBtnClickAction()
         {
-            // Выполнить поиск
+            // Передать параметры поиска
             searchSettingsRuntime.SkipItemsCount = 0;
+            searchSettingsRuntime.SearchQuery = searchWindow.View.SearchInput.text;
 
+            // Выполнить поиск
             searchSettingsRuntime.SearchRequest?.Invoke();
         }
 

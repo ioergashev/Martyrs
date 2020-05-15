@@ -5,7 +5,7 @@ namespace PSTGU
 {
     public class WelcomeViewComponent : MonoBehaviour
     {
-        public Button OpenUrlBtn;
-        public Toggle DontShowToggle;
+        public Button SearchBtn;
+        public InputField SearchInput;
     }
 }

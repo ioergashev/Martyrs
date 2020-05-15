@@ -9,14 +9,12 @@ namespace PSTGU
     /// <summary> Управляет поиском </summary>
     public class SearchSystem : MonoBehaviour
     {
-        private SearchWindow searchWindow;
         private SearchSettingsRuntime searchSettingsRuntime;
         private DataRuntime dataRuntime;
         private ManagerServer managerServer;
 
         private void Awake()
         {
-            searchWindow = FindObjectOfType<SearchWindow>();
             searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
             dataRuntime = FindObjectOfType<DataRuntime>();
             managerServer = FindObjectOfType<ManagerServer>();
@@ -29,10 +27,10 @@ namespace PSTGU
         
         private void SearchRequestAction()
         {
-            SearchAction(searchSettingsRuntime.SkipItemsCount);
+            SearchAction(searchSettingsRuntime.SearchQuery, searchSettingsRuntime.SkipItemsCount);
         }
 
-        private void SearchAction(int skip = 0)
+        private void SearchAction(string query, int skip = 0)
         {
             // Если поисковой запрос уже выполняется
             if (searchSettingsRuntime.SearchCoroutine != null)
@@ -44,7 +42,7 @@ namespace PSTGU
             ResetSearchSettings();
 
             // Начать поиск
-            searchSettingsRuntime.SearchCoroutine = StartCoroutine(SearchCoroutine(skip));
+            searchSettingsRuntime.SearchCoroutine = StartCoroutine(SearchCoroutine(query, skip));
 
             // Сообщить о начале поиска
             searchSettingsRuntime.OnStartSearch?.Invoke();
@@ -57,10 +55,9 @@ namespace PSTGU
             searchSettingsRuntime.ItemsCount = 0;
         }
 
-        private IEnumerator SearchCoroutine(int skip)
+        private IEnumerator SearchCoroutine(string query, int skip)
         {
             // Сформировать данные для запроса
-            var query = searchWindow.View.SearchInput.text;
             var itemsPerPage = searchSettingsRuntime.ItemsPerPage;
 
             // Сформировать запрос
@@ -79,6 +76,7 @@ namespace PSTGU
             {
                 // Сообщить об ошибке
                 callback = searchSettingsRuntime.OnSearchError;
+
                 // Сбросить данные поиска
                 ResetSearchSettings();
             }

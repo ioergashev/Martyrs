@@ -10,7 +10,6 @@ namespace PSTGU
     public class WelcomeScreenSystem : MonoBehaviour
     {
         private WelcomeScreen welcomeScreen;
-        private WelcomeSettingsRuntime welcomeSettingsRuntime;
         private ManagerWindows managerWindows;
         private WindowsSettingsRuntime windowsSettingsRuntime;
         private SearchSettingsRuntime searchSettingsRuntime;
@@ -18,7 +17,6 @@ namespace PSTGU
         private void Awake()
         {
             welcomeScreen = FindObjectOfType<WelcomeScreen>();
-            welcomeSettingsRuntime = FindObjectOfType<WelcomeSettingsRuntime>();
             managerWindows = FindObjectOfType<ManagerWindows>();
             windowsSettingsRuntime = FindObjectOfType<WindowsSettingsRuntime>();
             searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
@@ -26,32 +24,24 @@ namespace PSTGU
 
         private void Start()
         {
-            // Если нужно показать окно
-            if (welcomeSettingsRuntime.NeedShowWelcome)
-            {
-                // Показать окно
-                managerWindows.SetScreenActive(Screens.Welcome, true);
-            }
+            // Показать окно
+            managerWindows.SetScreenActive(Screens.Welcome, true);
 
-            // Подписаться на кнопку открытия сайта
-            welcomeScreen.View.OpenUrlBtn.onClick.AddListener(OpenUrlClickAction);
+            // Подписаться на кнопку поиска
+            welcomeScreen.View.SearchBtn.onClick.AddListener(SearchBtnClickAction);
 
             // Подписаться на начало поиска
             searchSettingsRuntime.OnStartSearch.AddListener(StartSearchAction);
-
-            // Подписаться на закрытие окна
-            windowsSettingsRuntime.OnStartCloseWelcome.AddListener(StartCloseWelcomeAction);
         }
 
-        private void OpenUrlClickAction()
+        private void SearchBtnClickAction()
         {
-            Application.OpenURL(welcomeSettingsRuntime.SiteUrl);
-        }
+            // Передать параметры поиска
+            searchSettingsRuntime.SkipItemsCount = 0;
+            searchSettingsRuntime.SearchQuery = welcomeScreen.View.SearchInput.text;
 
-        private void StartCloseWelcomeAction()
-        {
-            // Проерить галочку
-            welcomeSettingsRuntime.NeedShowWelcome = !welcomeScreen.View.DontShowToggle.isOn;
+            // Выполнить поиск
+            searchSettingsRuntime.SearchRequest?.Invoke();
         }
 
         private void StartSearchAction()

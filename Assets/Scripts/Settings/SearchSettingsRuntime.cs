@@ -18,6 +18,9 @@ namespace PSTGU
         [HideInInspector]
         public int ItemsCount = 0;
 
+        [HideInInspector]
+        public string SearchQuery;
+
         public int PagesCount
         {
             get
