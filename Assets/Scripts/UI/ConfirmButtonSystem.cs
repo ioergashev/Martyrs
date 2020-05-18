@@ -32,22 +32,40 @@ namespace PSTGU
                 return;
             }
 
-            // Если открыто окно поиска, 
-            // не выполняется поиск
-            // нет открытых панелей за исключением окна приветствия,
-            bool allowSearch =  
+            // Если не выполняется поиск,
+            // открыто окно поиска, 
+            // нет открытых панелей
+            bool searchInSearchWindow =  
                 windowsSettingsRuntime.CurrentWindow == Windows.Search
                 && searchSettingsRuntime.SearchCoroutine == null
-                && (windowsSettingsRuntime.OpenedScreens.Count == 0
-                    || (windowsSettingsRuntime.OpenedScreens.Count == 1
-                        && windowsSettingsRuntime.OpenedScreens.Contains(Screens.Welcome)
-                        && welcomeScreen.View.SearchInput.interactable));
+                && windowsSettingsRuntime.OpenedScreens.Count == 0;
 
-            if (allowSearch)
+            // Если не выполняется поиск,
+            // открыто только окно приветствия, 
+            // анимация закончилась
+            bool searchInWelcomeScreen =
+                searchSettingsRuntime.SearchCoroutine == null
+                && windowsSettingsRuntime.OpenedScreens.Count == 1
+                && windowsSettingsRuntime.OpenedScreens.Contains(Screens.Welcome)
+                && welcomeScreen.View.SearchInput.interactable;
+
+
+            if (searchInSearchWindow)
             {
-                // Выполнить поиск
+                // Настроить поиск
                 searchSettingsRuntime.SkipItemsCount = 0;
+                searchSettingsRuntime.SearchQuery = searchWindow.View.SearchInput.text;
 
+                // Выполнить поиск
+                searchSettingsRuntime.SearchRequest?.Invoke();
+            }
+            else if (searchInWelcomeScreen)
+            {
+                // Настроить поиск
+                searchSettingsRuntime.SkipItemsCount = 0;
+                searchSettingsRuntime.SearchQuery = welcomeScreen.View.SearchInput.text;
+
+                // Выполнить поиск
                 searchSettingsRuntime.SearchRequest?.Invoke();
             }
         }
