@@ -54,5 +54,7 @@ namespace PSTGU
 
         [HideInInspector]
         public List<Screens> OpenedScreens = new List<Screens>();
+
+        public float WidowsTransitionDuration = 1f;
     }
 }

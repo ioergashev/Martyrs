@@ -5,8 +5,16 @@ using UnityEngine.Events;
 
 namespace PSTGU
 {
+    public enum WindowTransitionType
+    {
+        None,
+        Fade
+    }
+
     public class EnableWindowComponent : MonoBehaviour
     {
+        public WindowTransitionType TransitionType = WindowTransitionType.None;
+
         [HideInInspector]
         public bool Enable;
 
