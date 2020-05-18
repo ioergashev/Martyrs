@@ -51,6 +51,9 @@ namespace PSTGU
         /// <summary> Настроить окно в соответствии с контентом </summary>
         private void SetCotentData(PersonContent content)
         {
+            // Перейти на начало
+            detailsWindow.View.ContentScrollRect.verticalNormalizedPosition = 1;
+
             // Установить заголовок
             detailsWindow.View.TittleTxt.text = FormatTittle(content.data);
 

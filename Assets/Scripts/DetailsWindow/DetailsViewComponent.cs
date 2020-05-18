@@ -6,20 +6,31 @@ namespace PSTGU
 {
     public class DetailsViewComponent : MonoBehaviour
     {
+        [Header("Header")]
+        public Text TittleTxt;
+        public LayoutGroup InfoLayout;
+
+        [Header("Body")]
+        public ScrollRect ContentScrollRect;
+
+        public Button CommentBtn;
         public Text CommentTxt;
         public Image CommentBGImg;
-        public Image EventsBGImg;
-        public Text TittleTxt;
-        public Button BackBtn;
+
         public Button EventsBtn;
+        public Image EventsBGImg;
         public Text EventsTxt;
-        public Transform PhotosContainer;
-        public SimpleScrollSnap PhotosScroll;
-        public Button CommentBtn;
-        public LayoutGroup InfoLayout;
-        public LayoutGroup ContentLayout;
+
         public Button BibliographyBtn;
         public Image BibliographyBGImg;
         public Text BibliographyTxt;
+
+        public Transform PhotosContainer;
+        public SimpleScrollSnap PhotosScroll;
+
+        public LayoutGroup ContentLayout;
+
+        [Header("Bottom")]
+        public Button BackBtn;     
     }
 }
