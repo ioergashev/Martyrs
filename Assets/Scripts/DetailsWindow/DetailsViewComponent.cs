@@ -31,6 +31,8 @@ namespace PSTGU
         public LayoutGroup ContentLayout;
 
         [Header("Bottom")]
-        public Button BackBtn;     
+        public Button BackBtn;
+        public HeldButton DownBtn;
+        public HeldButton UpBtn;
     }
 }

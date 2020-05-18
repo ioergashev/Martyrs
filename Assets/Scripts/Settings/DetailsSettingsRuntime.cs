@@ -7,6 +7,8 @@ namespace PSTGU
 {
     public class DetailsSettingsRuntime : MonoBehaviour
     {
+        public float ScrollBtnSpeed = 1;
+
         [HideInInspector]
         public PersonContent Content;
 

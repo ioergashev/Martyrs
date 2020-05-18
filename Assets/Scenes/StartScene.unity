@@ -300,6 +300,8 @@ MonoBehaviour:
   PhotosScroll: {fileID: 1134349910}
   ContentLayout: {fileID: 2102299460}
   BackBtn: {fileID: 1704481185}
+  DownBtn: {fileID: 526393847}
+  UpBtn: {fileID: 2116516361}
 --- !u!114 &44970679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c124666fd0cdfac4a839627b2c02c2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScrollBtnSpeed: 1000
   Content:
     data:
       "\u041D\u043E\u043C\u0435\u0440": 0
@@ -1438,6 +1441,7 @@ GameObject:
   - component: {fileID: 526393845}
   - component: {fileID: 526393844}
   - component: {fileID: 526393843}
+  - component: {fileID: 526393847}
   m_Layer: 5
   m_Name: Btn_Down
   m_TagString: Untagged
@@ -1558,6 +1562,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526393841}
   m_CullTransparentMesh: 0
+--- !u!114 &526393847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526393841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f02fadbc197d4124bb3d3dc192ab84c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsHeld: 0
+  OnDown:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &569014063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,8 +2235,8 @@ MonoBehaviour:
   m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
-  m_DecelerationRate: 0.3
-  m_ScrollSensitivity: 800
+  m_DecelerationRate: 0.2
+  m_ScrollSensitivity: 5000
   m_Viewport: {fileID: 1911746170}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -9186,7 +9209,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.3
-  m_ScrollSensitivity: 800
+  m_ScrollSensitivity: 3000
   m_Viewport: {fileID: 1888844763}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -9884,6 +9907,7 @@ GameObject:
   - component: {fileID: 2116516359}
   - component: {fileID: 2116516358}
   - component: {fileID: 2116516357}
+  - component: {fileID: 2116516361}
   m_Layer: 5
   m_Name: Btn_Up
   m_TagString: Untagged
@@ -10004,6 +10028,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116516355}
   m_CullTransparentMesh: 0
+--- !u!114 &2116516361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116516355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f02fadbc197d4124bb3d3dc192ab84c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsHeld: 0
+  OnDown:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2146914361
 GameObject:
   m_ObjectHideFlags: 0
@@ -10016,6 +10059,7 @@ GameObject:
   - component: {fileID: 2146914364}
   - component: {fileID: 2146914363}
   - component: {fileID: 2146914366}
+  - component: {fileID: 2146914365}
   m_Layer: 0
   m_Name: DetailsWindow
   m_TagString: Untagged
@@ -10059,6 +10103,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00598c1765a59094f914fd4e7c650056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2146914365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146914361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995cbe2a6eaeb4a4493b0c14673adba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2146914366
