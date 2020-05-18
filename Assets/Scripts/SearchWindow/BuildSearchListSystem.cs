@@ -157,8 +157,10 @@ namespace PSTGU
             // Если строка не пустая
             if (!string.IsNullOrEmpty(str) && str.Length >=2)
             {
-                 // Сделать первый знак заглавным
-                 str = char.ToUpperInvariant(str[0]) + str.Substring(1);
+                char firstChar = upper ? char.ToUpperInvariant(str[0])
+                   : char.ToLowerInvariant(str[0]);
+
+                str = firstChar + str.Substring(1);
             }
 
             return str;
