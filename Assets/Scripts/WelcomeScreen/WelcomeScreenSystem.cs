@@ -13,12 +13,14 @@ namespace PSTGU
         private ManagerWindows managerWindows;
         private WindowsSettingsRuntime windowsSettingsRuntime;
         private SearchSettingsRuntime searchSettingsRuntime;
+        private SearchWindow searchWindow;
 
         private void Awake()
         {
             welcomeScreen = FindObjectOfType<WelcomeScreen>();
             managerWindows = FindObjectOfType<ManagerWindows>();
             windowsSettingsRuntime = FindObjectOfType<WindowsSettingsRuntime>();
+            searchWindow = FindObjectOfType<SearchWindow>();
             searchSettingsRuntime = FindObjectOfType<SearchSettingsRuntime>();
         }
 
@@ -49,6 +51,9 @@ namespace PSTGU
             // Если окно открыто
             if(windowsSettingsRuntime.OpenedScreens.Contains(Screens.Welcome))
             {
+                // Передать ввод в окно поиска
+                searchWindow.View.SearchInput.text = welcomeScreen.View.SearchInput.text;
+
                 // Закрыть окно
                 managerWindows.SetScreenActive(Screens.Welcome, false);
             }
