@@ -38,8 +38,7 @@ namespace PSTGU
         }
 
         private void UpdateDetailsLayout()
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(detailsWindow.View.AttributesLayout.GetComponent<RectTransform>());
+        {           
             LayoutRebuilder.ForceRebuildLayoutImmediate(detailsWindow.View.InfoLayout.GetComponent<RectTransform>());
             LayoutRebuilder.ForceRebuildLayoutImmediate(detailsWindow.View.ContentLayout.GetComponent<RectTransform>());
             Canvas.ForceUpdateCanvases();

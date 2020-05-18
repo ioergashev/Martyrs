@@ -51,28 +51,8 @@ namespace PSTGU
         /// <summary> Настроить окно в соответствии с контентом </summary>
         private void SetCotentData(PersonContent content)
         {
-            // Установить ФИО
-            detailsWindow.View.NameTxt.text = content.data.ФИО;
-
-            //--- Аттрибуты ---
-            // Проверить наличие аттрибутов
-            bool sanExist = !string.IsNullOrEmpty(content.data.Сан_ЦеркСлужение);
-            bool chinExist = !string.IsNullOrEmpty(content.data.Канонизация.Чин_святости);
-
-            // Подчеркивание должно быть, если имеется сан и чин святости
-            detailsWindow.View.SanUnderlineImg.gameObject.SetActive(sanExist && chinExist);
-
-            // Включить/выключить текст сана
-            detailsWindow.View.SanTxt.gameObject.SetActive(sanExist);
-
-            // Включить/выключить текст чина
-            detailsWindow.View.ChinTxt.gameObject.SetActive(chinExist);
-
-            // Установить сан
-            detailsWindow.View.SanTxt.text = content.data.Сан_ЦеркСлужение;
-
-            // Установить чин святости
-            detailsWindow.View.ChinTxt.text = content.data.Канонизация.Чин_святости;
+            // Установить заголовок
+            detailsWindow.View.TittleTxt.text = FormatTittle(content.data);
 
             //--- Комментарий ---
             // Проверить наличие комментария
@@ -114,6 +94,47 @@ namespace PSTGU
             detailsWindow.View.BibliographyTxt.text = FormatBibliography(content.data.Библиография);
 
             detailsSettingsRuntime.OnContentSet?.Invoke();
+        }
+
+        private string FormatTittle(PersonContent.PersonData personData)
+        {
+            // По умолчанию только ФИО
+            string result = personData.ФИО;
+
+            // Форматировать чин
+            string chin = MakeFirstCharCase(personData.Канонизация.Чин_святости, true);
+
+            // Если имеется чин
+            if (!string.IsNullOrEmpty(chin))
+            {
+                // Прибавить чин к имени
+                result = string.Format("{0} {1}", chin, result);
+            }
+
+            // Форматировать сан
+            string san = MakeFirstCharCase(personData.Сан_ЦеркСлужение, false);
+
+            // Если имеется сан
+            if (!string.IsNullOrEmpty(san))
+            {
+                // Прибавить сан к имени
+                result = string.Format("{0}, {1}", result, san);
+            }
+
+            return result;
+        }
+
+        /// <param name="upper"> true - верхний регистр; false - нижний регистр </param>
+        private string MakeFirstCharCase(string str, bool upper)
+        {
+            // Если строка не пустая
+            if (!string.IsNullOrEmpty(str) && str.Length >= 2)
+            {
+                // Сделать первый знак заглавным
+                str = char.ToUpperInvariant(str[0]) + str.Substring(1);
+            }
+
+            return str;
         }
 
         private string FormatEvents(List<PersonContent.Event> events)

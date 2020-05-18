@@ -129,16 +129,16 @@ namespace PSTGU
         private string FormatName(PersonContent.PersonData personData)
         {
             // По умолчанию только ФИО
-            var result = personData.ФИО;
+            string result = personData.ФИО;
 
             // Форматировать чин
-            var chin = MakeFirstCharCase(personData.Канонизация.Чин_святости, false);
+            string chin = MakeFirstCharCase(personData.Канонизация.Чин_святости, true);
 
             // Если имеется чин
             if (!string.IsNullOrEmpty(chin))
             {
                 // Прибавить чин к имени
-                result += ", " + chin;
+                result = string.Format("{0} {1}", chin, result);
             }
 
             return result;
@@ -146,13 +146,13 @@ namespace PSTGU
 
         private string FormatSan(PersonContent.PersonData personData)
         {
-            var result = MakeFirstCharCase(personData.Сан_ЦеркСлужение);
+            string result = MakeFirstCharCase(personData.Сан_ЦеркСлужение, true);
 
             return result;
         }
 
         /// <param name="upper"> true - верхний регистр; false - нижний регистр </param>
-        private string MakeFirstCharCase(string str, bool upper = true)
+        private string MakeFirstCharCase(string str, bool upper)
         {
             // Если строка не пустая
             if (!string.IsNullOrEmpty(str) && str.Length >=2)

@@ -9,10 +9,7 @@ namespace PSTGU
         public Text CommentTxt;
         public Image CommentBGImg;
         public Image EventsBGImg;
-        public Text SanTxt;
-        public Image SanUnderlineImg;
-        public Text ChinTxt;
-        public Text NameTxt;
+        public Text TittleTxt;
         public Button BackBtn;
         public Button EventsBtn;
         public Text EventsTxt;
@@ -21,7 +18,6 @@ namespace PSTGU
         public Button CommentBtn;
         public LayoutGroup InfoLayout;
         public LayoutGroup ContentLayout;
-        public LayoutGroup AttributesLayout;
         public Button BibliographyBtn;
         public Image BibliographyBGImg;
         public Text BibliographyTxt;
