@@ -3098,7 +3098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SearchInput: {fileID: 1984584860}
   SearchBtn: {fileID: 668112322}
-  VertSearchScrollbar: {fileID: 2025981664}
+  SearchScrollRect: {fileID: 1984804240}
   NextPageBtn: {fileID: 1104169084}
   PrevPageBtn: {fileID: 1776664444}
   RecordsFoundCountTxt: {fileID: 1240077208}

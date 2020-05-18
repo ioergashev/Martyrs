@@ -37,7 +37,7 @@ namespace PSTGU
         private void SearchCompliteAction()
         {
             // Перейти на начало списка
-            searchWindow.View.VertSearchScrollbar.value = 1;
+            searchWindow.View.SearchScrollRect.verticalNormalizedPosition = 1;
         }
     }
 }
