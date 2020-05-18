@@ -284,21 +284,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db3614f13716fed4da625e4350a2741b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TittleTxt: {fileID: 1873926909}
+  InfoLayout: {fileID: 569014067}
+  ContentScrollRect: {fileID: 710096793}
+  CommentBtn: {fileID: 2104110246}
   CommentTxt: {fileID: 1360472590}
   CommentBGImg: {fileID: 1104441213}
-  EventsBGImg: {fileID: 1768269950}
-  TittleTxt: {fileID: 1873926909}
-  BackBtn: {fileID: 1704481185}
   EventsBtn: {fileID: 1059549626}
+  EventsBGImg: {fileID: 1768269950}
   EventsTxt: {fileID: 1385955207}
-  PhotosContainer: {fileID: 191229888}
-  PhotosScroll: {fileID: 1134349910}
-  CommentBtn: {fileID: 2104110246}
-  InfoLayout: {fileID: 569014067}
-  ContentLayout: {fileID: 2102299460}
   BibliographyBtn: {fileID: 1287257544}
   BibliographyBGImg: {fileID: 1450672228}
   BibliographyTxt: {fileID: 1424203525}
+  PhotosContainer: {fileID: 191229888}
+  PhotosScroll: {fileID: 1134349910}
+  ContentLayout: {fileID: 2102299460}
+  BackBtn: {fileID: 1704481185}
 --- !u!114 &44970679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3099,12 +3100,12 @@ MonoBehaviour:
   SearchInput: {fileID: 1984584860}
   SearchBtn: {fileID: 668112322}
   SearchScrollRect: {fileID: 1984804240}
+  SearchListContainer: {fileID: 1189517946}
   NextPageBtn: {fileID: 1104169084}
   PrevPageBtn: {fileID: 1776664444}
   RecordsFoundCountTxt: {fileID: 1240077208}
   PagesCountTxt: {fileID: 705922160}
   PagesNavigationContainer: {fileID: 141074070}
-  SearchListContainer: {fileID: 1189517946}
 --- !u!114 &968189758
 MonoBehaviour:
   m_ObjectHideFlags: 0
