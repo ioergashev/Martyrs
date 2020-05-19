@@ -93,11 +93,11 @@ namespace PSTGU
                 // Проверить наличие подписи
                 bool signExist = !string.IsNullOrEmpty(photos[i].Подпись);
 
-                // Включить/выключить подпись
-                instance.View.PhotoSignBGImg.gameObject.SetActive(signExist);
+                //// Включить/выключить подпись
+                //instance.View.PhotoSignBGImg.gameObject.SetActive(signExist);
 
-                // Установить подпись
-                instance.View.PhotoSignTxt.text = photos[i].Подпись;
+                //// Установить подпись
+                //instance.View.PhotoSignTxt.text = photos[i].Подпись;
 
                 // Добавить фото в список фотографий
                 _photosScreenSettingsRuntime.ScrollPhotos.Add(instance);

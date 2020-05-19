@@ -26,8 +26,11 @@ namespace PSTGU
 
         private void Start()
         {
-            // Показать окно
-            managerWindows.SetScreenActive(Screens.Welcome, true);
+            if (!Application.isEditor || WelcomeSettings.Instance.ShowWelcomeInEditor)
+            {
+                // Показать окно
+                managerWindows.SetScreenActive(Screens.Welcome, true);
+            }
 
             // Подписаться на кнопку поиска
             welcomeScreen.View.SearchBtn.onClick.AddListener(SearchBtnClickAction);

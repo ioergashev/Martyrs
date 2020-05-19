@@ -10,7 +10,5 @@ namespace PSTGU
         public RawImage PhotoImg;
         public AspectRatioFitter PhotoAspectRatio;
         public Button PhotoBtn;
-        public Text PhotoSignTxt;
-        public Image PhotoSignBGImg;
     }
 }
